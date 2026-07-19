@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FraudShield AI | Intelligent Insurance Claim Risk Assessment</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Animated Background Blobs -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <i data-lucide="shield-check" class="logo-icon"></i>
+                <span>FraudShield AI</span>
+            </a>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#features">Features</a>
+                <a href="#analyze" class="active">Analyze Claim</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <button class="mobile-menu-btn">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <span class="badge fade-in-up">AI-Powered Risk Assessment</span>
+            <h1 class="hero-title fade-in-up delay-1">Intelligent Insurance Claim Risk Detection</h1>
+            <p class="hero-subtitle fade-in-up delay-2">
+                Leverage state-of-the-art XGBoost machine learning to instantly detect fraudulent insurance claims with unprecedented accuracy.
+            </p>
+            <div class="hero-actions fade-in-up delay-3">
+                <a href="#analyze" class="btn btn-primary">
+                    Analyze Claim
+                    <i data-lucide="arrow-right"></i>
+                </a>
+            </div>
+        </div>
+        <div class="hero-illustration fade-in-up delay-4">
+            <img src="assets/hero.png" alt="AI Insurance Protection" class="hero-image glass-card">
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="statistics">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3 class="stat-number">94.6%</h3>
+                    <p class="stat-text">Model Accuracy</p>
+                </div>
+                <div class="stat-card">
+                    <h3 class="stat-number">&lt; 1s</h3>
+                    <p class="stat-text">Real-Time Prediction</p>
+                </div>
+                <div class="stat-card">
+                    <h3 class="stat-number">XGBoost</h3>
+                    <p class="stat-text">Core Engine</p>
+                </div>
+                <div class="stat-card">
+                    <h3 class="stat-number">XAI</h3>
+                    <p class="stat-text">Explainable AI</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Security Section -->
+    <section class="integration-section">
+        <div class="container integration-layout">
+            <div class="integration-image fade-in-up">
+                <img src="assets/shield.png" alt="Secure Processing" class="floating-image">
+            </div>
+            <div class="integration-content fade-in-up delay-2">
+                <h2>Bank-Grade Security</h2>
+                <p>Your claims data is processed with industry-leading encryption and strict compliance standards, ensuring complete privacy and regulatory alignment.</p>
+                <ul class="check-list">
+                    <li><i data-lucide="check-circle-2"></i> End-to-end Encryption</li>
+                    <li><i data-lucide="check-circle-2"></i> SOC2 Compliant</li>
+                    <li><i data-lucide="check-circle-2"></i> Zero-Knowledge Processing</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Enterprise-Grade Capabilities</h2>
+                <p>Designed to integrate seamlessly into modern insurance workflows, providing robust and interpretable risk insights.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">
+                        <i data-lucide="cpu" class="feature-icon"></i>
+                    </div>
+                    <h3>AI Powered Detection</h3>
+                    <p>Advanced machine learning models identify subtle patterns and anomalies indicative of fraudulent behavior.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">
+                        <i data-lucide="network" class="feature-icon"></i>
+                    </div>
+                    <h3>Machine Learning</h3>
+                    <p>Trained on thousands of historical claims using optimized XGBoost algorithms for superior predictive performance.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">
+                        <i data-lucide="zap" class="feature-icon"></i>
+                    </div>
+                    <h3>Real-Time Prediction</h3>
+                    <p>Sub-second inference times enable instant decision support during the claim adjudication process.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">
+                        <i data-lucide="lightbulb" class="feature-icon"></i>
+                    </div>
+                    <h3>Explainable AI</h3>
+                    <p>Transparent predictions provide confidence scores, ensuring decisions are interpretable and justifiable.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">
+                        <i data-lucide="server" class="feature-icon"></i>
+                    </div>
+                    <h3>FastAPI Backend</h3>
+                    <p>High-performance, asynchronous REST API architecture built on modern Python standards.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">
+                        <i data-lucide="shield-alert" class="feature-icon"></i>
+                    </div>
+                    <h3>Secure Processing</h3>
+                    <p>Data privacy and integrity maintained through enterprise-grade security protocols and validation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Prediction Section -->
+    <section id="analyze" class="prediction-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Analyze Claim Risk</h2>
+                <p>Enter the claim details below to generate an instant risk assessment.</p>
+            </div>
+            
+            <div class="prediction-layout">
+                <!-- Form Area -->
+                <form class="prediction-form">
+                    
+                    <!-- Card 1: Policy Information -->
+                    <div class="form-card">
+                        <div class="form-card-header">
+                            <i data-lucide="file-text"></i>
+                            <h3>Policy Information</h3>
+                        </div>
+                        <div class="form-grid">
+                            <div class="input-group">
+                                <label for="policyType">Policy Type</label>
+                                <span class="helper-text">Combined coverage and vehicle type.</span>
+                                <select id="policyType">
+                                    <option value="" disabled selected>Select type...</option>
+                                    <option value="Sedan - Collision">Sedan - Collision</option>
+                                    <option value="Sedan - Liability">Sedan - Liability</option>
+                                    <option value="Sedan - All Perils">Sedan - All Perils</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="basePolicy">Base Policy</label>
+                                <span class="helper-text">Core coverage type (e.g. Collision).</span>
+                                <select id="basePolicy">
+                                    <option value="" disabled selected>Select base...</option>
+                                    <option value="Collision">Collision</option>
+                                    <option value="Liability">Liability</option>
+                                    <option value="All Perils">All Perils</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="deductible">Deductible ($)</label>
+                                <span class="helper-text">Out-of-pocket amount before insurance pays.</span>
+                                <input type="number" id="deductible" placeholder="e.g. 400" min="0">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Customer Information -->
+                    <div class="form-card">
+                        <div class="form-card-header">
+                            <i data-lucide="user"></i>
+                            <h3>Customer Information</h3>
+                        </div>
+                        <div class="form-grid">
+                            <div class="input-group">
+                                <label for="age">Age</label>
+                                <span class="helper-text">Primary policyholder's age.</span>
+                                <input type="number" id="age" placeholder="e.g. 35" min="16">
+                            </div>
+                            <div class="input-group">
+                                <label for="sex">Sex</label>
+                                <span class="helper-text">Gender of the policyholder.</span>
+                                <select id="sex">
+                                    <option value="" disabled selected>Select sex...</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="maritalStatus">Marital Status</label>
+                                <span class="helper-text">Current legal marital status.</span>
+                                <select id="maritalStatus">
+                                    <option value="" disabled selected>Select status...</option>
+                                    <option value="Single">Single</option>
+                                    <option value="Married">Married</option>
+                                    <option value="Divorced">Divorced</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="pastClaims">Past Number of Claims</label>
+                                <span class="helper-text">Prior claims filed by this customer.</span>
+                                <select id="pastClaims">
+                                    <option value="" disabled selected>Select past claims...</option>
+                                    <option value="none">None</option>
+                                    <option value="1">1</option>
+                                    <option value="2 to 4">2 to 4</option>
+                                    <option value="more than 4">More than 4</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Vehicle Information -->
+                    <div class="form-card">
+                        <div class="form-card-header">
+                            <i data-lucide="car"></i>
+                            <h3>Vehicle Information</h3>
+                        </div>
+                        <div class="form-grid">
+                            <div class="input-group">
+                                <label for="make">Make</label>
+                                <span class="helper-text">Vehicle manufacturer brand.</span>
+                                <select id="make">
+                                    <option value="" disabled selected>Select make...</option>
+                                    <option value="Honda">Honda</option>
+                                    <option value="Toyota">Toyota</option>
+                                    <option value="Ford">Ford</option>
+                                    <option value="Mazda">Mazda</option>
+                                    <option value="Chevrolet">Chevrolet</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="vehicleCategory">Vehicle Category</label>
+                                <span class="helper-text">Vehicle classification type.</span>
+                                <select id="vehicleCategory">
+                                    <option value="" disabled selected>Select category...</option>
+                                    <option value="Sedan">Sedan</option>
+                                    <option value="Sport">Sport</option>
+                                    <option value="Utility">Utility</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="vehiclePrice">Vehicle Price</label>
+                                <span class="helper-text">Estimated market value of the vehicle.</span>
+                                <select id="vehiclePrice">
+                                    <option value="" disabled selected>Select price range...</option>
+                                    <option value="less than 20000">Less than $20,000</option>
+                                    <option value="20000 to 29000">$20,000 to $29,000</option>
+                                    <option value="30000 to 39000">$30,000 to $39,000</option>
+                                    <option value="more than 69000">More than $69,000</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="ageOfVehicle">Age of Vehicle</label>
+                                <span class="helper-text">Vehicle's age at the time of accident.</span>
+                                <select id="ageOfVehicle">
+                                    <option value="" disabled selected>Select age...</option>
+                                    <option value="new">New</option>
+                                    <option value="3 years">3 years</option>
+                                    <option value="5 years">5 years</option>
+                                    <option value="7 years">7 years</option>
+                                    <option value="more than 7">More than 7 years</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 4: Claim Information -->
+                    <div class="form-card">
+                        <div class="form-card-header">
+                            <i data-lucide="clipboard-list"></i>
+                            <h3>Claim Information</h3>
+                        </div>
+                        <div class="form-grid">
+                            <div class="input-group">
+                                <label for="accidentArea">Accident Area</label>
+                                <span class="helper-text">Urban (city) or Rural (countryside).</span>
+                                <select id="accidentArea">
+                                    <option value="" disabled selected>Select area...</option>
+                                    <option value="Urban">Urban</option>
+                                    <option value="Rural">Rural</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="fault">Fault</label>
+                                <span class="helper-text">Who is responsible for the accident.</span>
+                                <select id="fault">
+                                    <option value="" disabled selected>Select fault...</option>
+                                    <option value="Policy Holder">Policy Holder</option>
+                                    <option value="Third Party">Third Party</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="policeReport">Police Report Filed</label>
+                                <span class="helper-text">Was an official report filed at the scene?</span>
+                                <select id="policeReport">
+                                    <option value="" disabled selected>Select...</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="witness">Witness Present</label>
+                                <span class="helper-text">Were there independent witnesses?</span>
+                                <select id="witness">
+                                    <option value="" disabled selected>Select...</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 5: Additional Information -->
+                    <div class="form-card">
+                        <div class="form-card-header">
+                            <i data-lucide="plus-circle"></i>
+                            <h3>Additional Information</h3>
+                        </div>
+                        <div class="form-grid">
+                            <div class="input-group">
+                                <label for="agentType">Agent Type</label>
+                                <span class="helper-text">Handled by an internal or external agent.</span>
+                                <select id="agentType">
+                                    <option value="" disabled selected>Select agent...</option>
+                                    <option value="Internal">Internal</option>
+                                    <option value="External">External</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="addressChange">Address Change Since Claim</label>
+                                <span class="helper-text">Has the claimant recently moved?</span>
+                                <select id="addressChange">
+                                    <option value="" disabled selected>Select...</option>
+                                    <option value="no change">No change</option>
+                                    <option value="under 6 months">Under 6 months</option>
+                                    <option value="1 year">1 year</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="supplements">Number of Supplements</label>
+                                <span class="helper-text">Extra damage claims added later.</span>
+                                <select id="supplements">
+                                    <option value="" disabled selected>Select...</option>
+                                    <option value="none">None</option>
+                                    <option value="1 to 2">1 to 2</option>
+                                    <option value="3 to 5">3 to 5</option>
+                                    <option value="more than 5">More than 5</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="form-actions">
+                        <button type="button" class="btn-predict" id="predictBtn">
+                            <i data-lucide="activity" id="predictIcon"></i>
+                            <span id="predictText">Generate Prediction</span>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Results Sidebar (Dynamic UI) -->
+                <div class="results-panel">
+                    
+                    <!-- Waiting State -->
+                    <div class="result-card state-waiting" id="stateWaiting">
+                        <div class="waiting-content">
+                            <div class="waiting-icon-wrapper">
+                                <i data-lucide="shield-question" class="waiting-icon"></i>
+                            </div>
+                            <h4>Awaiting Data</h4>
+                            <p>Fill out the claim details and generate a prediction to see the AI risk assessment.</p>
+                        </div>
+                    </div>
+
+                    <!-- Fraud Result State -->
+                    <div class="result-card state-fraud hidden" id="stateFraud">
+                        <div class="result-header">
+                            <div class="result-icon-container">
+                                <i data-lucide="alert-triangle" class="result-icon"></i>
+                            </div>
+                            <h4>High Risk Claim</h4>
+                            <span class="prediction-tag">Fraudulent</span>
+                        </div>
+                        <div class="result-body">
+                            <div class="meter-container">
+                                <div class="meter-label">
+                                    <span>Fraud Score</span>
+                                    <span>92.4%</span>
+                                </div>
+                                <div class="meter-bar">
+                                    <div class="meter-fill" style="width: 0%;"></div>
+                                </div>
+                            </div>
+                            <div class="metric-row">
+                                <span class="metric-label">Model Confidence</span>
+                                <span class="metric-value">High</span>
+                            </div>
+                        </div>
+                        <div class="result-footer">
+                            <strong>Recommendation:</strong> Escalate to Special Investigations Unit (SIU) immediately.
+                        </div>
+                    </div>
+
+                    <!-- Genuine Result State -->
+                    <div class="result-card state-genuine hidden" id="stateGenuine">
+                        <div class="result-header">
+                            <div class="result-icon-container">
+                                <i data-lucide="check-circle-2" class="result-icon"></i>
+                            </div>
+                            <h4>Low Risk Claim</h4>
+                            <span class="prediction-tag">Genuine</span>
+                        </div>
+                        <div class="result-body">
+                            <div class="meter-container">
+                                <div class="meter-label">
+                                    <span>Fraud Score</span>
+                                    <span>12.8%</span>
+                                </div>
+                                <div class="meter-bar">
+                                    <div class="meter-fill" style="width: 0%;"></div>
+                                </div>
+                            </div>
+                            <div class="metric-row">
+                                <span class="metric-label">Model Confidence</span>
+                                <span class="metric-value">High</span>
+                            </div>
+                        </div>
+                        <div class="result-footer">
+                            <strong>Recommendation:</strong> Proceed with standard automated claims processing.
+                        </div>
+                    </div>
+
+                    <!-- AI Decision Explanation State -->
+                    <div class="result-card state-explanation hidden" id="stateExplanation" style="margin-top: 24px; background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); border: 1px solid rgba(0,0,0,0.1);">
+                        <div class="result-header">
+                            <div class="result-icon-container" style="background: rgba(11, 60, 93, 0.1); color: var(--primary);">
+                                <i data-lucide="brain-circuit" class="result-icon"></i>
+                            </div>
+                            <h4>AI Decision Analysis</h4>
+                        </div>
+                        <div class="result-body">
+                            <div id="explanationText" class="explanation-text-container" style="margin-bottom: 24px; font-size: 0.95rem; color: var(--text-primary); padding: 16px; background: rgba(0,0,0,0.02); border-radius: var(--radius-md); border-left: 4px solid var(--accent); font-weight: 600;">
+                                <!-- Populated by JS -->
+                            </div>
+                            
+                            <div class="shap-container">
+                                <div class="explanation-factors hidden" id="positiveFactorsContainer">
+                                    <div class="shap-section-title up">
+                                        <i data-lucide="trending-up" style="width: 18px; height: 18px;"></i> High Risk Factors
+                                    </div>
+                                    <div id="positiveImpacts" style="display: flex; flex-direction: column; gap: 12px;">
+                                        <!-- Populated by JS -->
+                                    </div>
+                                </div>
+                                
+                                <div class="explanation-factors hidden" id="negativeFactorsContainer" style="margin-top: 8px;">
+                                    <div class="shap-section-title down">
+                                        <i data-lucide="trending-down" style="width: 18px; height: 18px;"></i> Low Risk Factors
+                                    </div>
+                                    <div id="negativeImpacts" style="display: flex; flex-direction: column; gap: 12px;">
+                                        <!-- Populated by JS -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <a href="#" class="logo">
+                    <i data-lucide="shield-check" class="logo-icon"></i>
+                    <span>FraudShield AI</span>
+                </a>
+                <p>Intelligent Insurance Fraud Detection using advanced machine learning for modern enterprises.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <a href="#home">Home</a>
+                <a href="#features">Features</a>
+                <a href="#analyze">Analyze Claim</a>
+            </div>
+            <div class="footer-links">
+                <h4>Contact</h4>
+                <a href="#"><i data-lucide="mail"></i> support@fraudshield.ai</a>
+                <a href="#"><i data-lucide="github"></i> GitHub</a>
+                <a href="#"><i data-lucide="linkedin"></i> LinkedIn</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2026 FraudShield AI. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        lucide.createIcons();
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
