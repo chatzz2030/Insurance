@@ -1,5 +1,5 @@
 console.log("SCRIPT LOADED");
-const API_BASE_URL = "http://127.0.0.1:8000";
+const API_BASE_URL = "https://insurance-fraud-api-5pvm.onrender.com";
 
 // Required fields exactly matching FastAPI ClaimInput
 const requiredFields = [
