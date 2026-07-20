@@ -22,6 +22,7 @@ const requiredFields = [
     "AddressChange_Claim",
     "BasePolicy"
 ];
+
 // Map existing HTML IDs to backend field names
 const idMap = {
     policyType: "PolicyType",
@@ -46,19 +47,12 @@ const idMap = {
 
 document.addEventListener("DOMContentLoaded", () => {
     const predictBtn = document.getElementById("predictBtn");
-    const predictIcon = document.getElementById("predictIcon");
     const predictText = document.getElementById("predictText");
-
-    const stateWaiting = document.getElementById("stateWaiting");
-    const stateFraud = document.getElementById("stateFraud");
-    const stateGenuine = document.getElementById("stateGenuine");
-    const stateExplanation = document.getElementById("stateExplanation");
-
     const form = document.querySelector(".prediction-form");
+    const formView = document.getElementById("formView");
+    const reportView = document.getElementById("reportView");
 
     console.log("DOM Loaded");
-    console.log(predictBtn);
-    console.log(form);
     if (!predictBtn || !form) return;
 
     // Premium hover effect
@@ -85,10 +79,10 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("Predict button clicked");
         e.preventDefault();
 
-
         const payload = {};
         let isValid = true;
         let firstInvalidElement = null;
+        
         function showError(element, message) {
             alert(message);
             element.focus();
@@ -110,23 +104,14 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             const value = element.value?.trim();
-            // Deductible validation
+            
             // Age validation
             if (backendKey === "Age") {
                 const age = parseInt(value);
-
                 if (isNaN(age) || age < 18 || age > 100) {
-                    showError(
-                        element,
-                        "Age must be between 18 and 100."
-                    );
-
+                    showError(element, "Age must be between 18 and 100.");
                     isValid = false;
-
-                    if (!firstInvalidElement) {
-                        firstInvalidElement = element;
-                    }
-
+                    if (!firstInvalidElement) firstInvalidElement = element;
                     return;
                 }
             }
@@ -134,19 +119,10 @@ document.addEventListener("DOMContentLoaded", () => {
             // Deductible validation
             if (backendKey === "Deductible") {
                 const deductible = parseInt(value);
-
                 if (![300, 400, 500, 700].includes(deductible)) {
-                    showError(
-                        element,
-                        "Deductible must be one of these values: 300, 400, 500, or 700."
-                    );
-
+                    showError(element, "Deductible must be one of these values: 300, 400, 500, or 700.");
                     isValid = false;
-
-                    if (!firstInvalidElement) {
-                        firstInvalidElement = element;
-                    }
-
+                    if (!firstInvalidElement) firstInvalidElement = element;
                     return;
                 }
             }
@@ -154,11 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!value) {
                 isValid = false;
                 element.style.borderColor = "var(--warning)";
-
-                if (!firstInvalidElement) {
-                    firstInvalidElement = element;
-                }
-
+                if (!firstInvalidElement) firstInvalidElement = element;
                 return;
             }
 
@@ -188,6 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             return;
         }
+        
         // Loading state
         predictBtn.disabled = true;
         predictText.textContent = "Analyzing Claim...";
@@ -203,17 +176,8 @@ document.addEventListener("DOMContentLoaded", () => {
         
         if (window.lucide) window.lucide.createIcons();
 
-        stateWaiting?.classList.add("hidden");
-        stateFraud?.classList.add("hidden");
-        stateGenuine?.classList.add("hidden");
-        stateExplanation?.classList.add("hidden");
-
-        document.querySelectorAll(".meter-fill").forEach(meter => {
-            meter.style.width = "0%";
-        });
-
         try {
-
+            // Hardcoded required values missing from the form but needed by backend
             payload.WeekOfMonth = 1;
             payload.WeekOfMonthClaimed = 1;
             payload.DriverRating = 2;
@@ -226,6 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
             payload.MonthClaimed = "Jan";
             payload.Days_Policy_Accident = "more than 30";
             payload.Days_Policy_Claim = "more than 30";
+            
             console.log("Payload:", payload);
             const response = await fetch(`${API_BASE_URL}/predict`, {
                 method: "POST",
@@ -243,136 +208,147 @@ document.addEventListener("DOMContentLoaded", () => {
                 throw new Error(message);
             }
 
-            // Backend returns:
-            // { prediction, probability, confidence }
+            // --- BUILD DYNAMIC REPORT DASHBOARD --- //
             const isFraud = data.prediction === "Fraud";
-            const targetState = isFraud ? stateFraud : stateGenuine;
-
-            targetState?.classList.remove("hidden");
-
-            const fraudScore = (data.probability * 100).toFixed(1) + "%";
-
-            // Update score labels
-            targetState?.querySelectorAll(".meter-label span").forEach(span => {
-                if (span.textContent.includes("%")) {
-                    span.textContent = fraudScore;
-                }
-            });
-
-            // Update confidence
-            targetState?.querySelectorAll(".metric-value").forEach(el => {
-                if (el.textContent.includes("%")) {
-                    el.textContent = data.confidence;
-                }
-            });
-
-            // Render AI Decision Explanation
-            stateExplanation?.classList.remove("hidden");
-
-            const explanationText = document.getElementById("explanationText");
-            if (explanationText && data.explanation) {
-                explanationText.innerHTML = data.explanation.map(line => `<div>${line}</div>`).join('');
-            }
-
-            const positiveImpacts = document.getElementById("positiveImpacts");
-            const negativeImpacts = document.getElementById("negativeImpacts");
-            const posContainer = document.getElementById("positiveFactorsContainer");
-            const negContainer = document.getElementById("negativeFactorsContainer");
+            const fraudScore = (data.probability * 100).toFixed(1);
             
-            if (positiveImpacts) positiveImpacts.innerHTML = "";
-            if (negativeImpacts) negativeImpacts.innerHTML = "";
-            posContainer?.classList.add("hidden");
-            negContainer?.classList.add("hidden");
-
+            let shapHtml = "";
+            let maxShap = 0;
             if (data.shap_explanation && data.shap_explanation.length > 0) {
-                const maxShap = Math.max(...data.shap_explanation.map(item => Math.abs(item.shap_value)));
+                maxShap = Math.max(...data.shap_explanation.map(item => Math.abs(item.shap_value)));
                 
                 data.shap_explanation.forEach(item => {
                     const isPositive = item.shap_value > 0;
-                    if (isPositive) posContainer?.classList.remove("hidden");
-                    if (!isPositive) negContainer?.classList.remove("hidden");
-                    
                     const percent = Math.min((Math.abs(item.shap_value) / maxShap) * 100, 100);
-                    
-                    const div = document.createElement("div");
-                    div.className = "shap-item";
-                    
-                    const header = document.createElement("div");
-                    header.className = "shap-header";
-                    header.innerHTML = `
-                        <span>${item.feature} <span style="color: var(--text-secondary); font-weight: 400; font-size: 0.85rem;">(${item.value})</span></span>
-                        <span style="color: ${isPositive ? 'var(--danger)' : 'var(--success)'}">${isPositive ? '+' : ''}${item.shap_value.toFixed(2)}</span>
-                    `;
-                    
-                    const barContainer = document.createElement("div");
-                    barContainer.className = "shap-bar-container";
-                    const bar = document.createElement("div");
-                    bar.className = `shap-bar ${isPositive ? 'up' : 'down'}`;
-                    bar.style.width = "0%"; // start at 0 for animation
-                    
-                    // Trigger animation
-                    setTimeout(() => {
-                        bar.style.width = `${percent}%`;
-                    }, 100);
-                    
-                    barContainer.appendChild(bar);
-                    
-                    const desc = document.createElement("div");
-                    desc.className = "shap-desc";
-                    desc.textContent = isPositive 
+                    const desc = isPositive 
                         ? "This factor drove the model's suspicion of fraud higher." 
                         : "This factor aligns strongly with safe, genuine claims.";
-                        
-                    div.appendChild(header);
-                    div.appendChild(barContainer);
-                    div.appendChild(desc);
                     
-                    if (isPositive) {
-                        positiveImpacts?.appendChild(div);
-                    } else {
-                        negativeImpacts?.appendChild(div);
-                    }
+                    shapHtml += `
+                        <div class="shap-item">
+                            <div class="shap-header">
+                                <span>${item.feature} <span style="color: var(--text-secondary); font-weight: 400; font-size: 0.85rem;">(${item.value})</span></span>
+                                <span style="color: ${isPositive ? 'var(--danger)' : 'var(--success)'}">${isPositive ? '+' : ''}${item.shap_value.toFixed(2)}</span>
+                            </div>
+                            <div class="shap-bar-container">
+                                <div class="shap-bar ${isPositive ? 'up' : 'down'}" style="width: 0%;" data-target-width="${percent}%"></div>
+                            </div>
+                            <div class="shap-desc">${desc}</div>
+                        </div>
+                    `;
                 });
             }
 
-            // Re-initialize lucide icons for dynamically added elements (like trending-up)
+            const explanationLines = (data.explanation || []).map(line => `<div>${line}</div>`).join('');
+
+            const reportHTML = `
+                <div class="report-topbar">
+                    <button id="backBtn" class="btn-back">
+                        <i data-lucide="arrow-left"></i> Back to Edit Details
+                    </button>
+                </div>
+                
+                <div class="report-dashboard">
+                    <!-- Summary Area -->
+                    <div class="report-summary-cards">
+                        <div class="summary-card ${isFraud ? 'fraud' : 'genuine'}">
+                            <div class="summary-icon ${isFraud ? 'danger' : 'success'}">
+                                <i data-lucide="${isFraud ? 'alert-triangle' : 'check-circle-2'}"></i>
+                            </div>
+                            <div class="summary-value">${data.prediction}</div>
+                            <div class="summary-label">Prediction Result</div>
+                        </div>
+                        <div class="summary-card">
+                            <div class="summary-icon primary">
+                                <i data-lucide="activity"></i>
+                            </div>
+                            <div class="summary-value">${fraudScore}%</div>
+                            <div class="summary-label">Fraud Probability</div>
+                        </div>
+                        <div class="summary-card">
+                            <div class="summary-icon primary">
+                                <i data-lucide="shield"></i>
+                            </div>
+                            <div class="summary-value">${isFraud ? 'High' : 'Low'}</div>
+                            <div class="summary-label">Risk Level</div>
+                        </div>
+                        <div class="summary-card">
+                            <div class="summary-icon primary">
+                                <i data-lucide="bar-chart-2"></i>
+                            </div>
+                            <div class="summary-value">${data.confidence || 'High'}</div>
+                            <div class="summary-label">Confidence Score</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Recommendations -->
+                    <div class="report-section">
+                        <div class="report-section-header">
+                            <i data-lucide="info"></i>
+                            <h3>Recommended Actions</h3>
+                        </div>
+                        <div class="rec-box">
+                            <strong>Recommendation:</strong> ${isFraud ? 'Escalate to Special Investigations Unit (SIU) immediately.' : 'Proceed with standard automated claims processing.'}
+                        </div>
+                    </div>
+
+                    <!-- AI Insights -->
+                    <div class="report-section">
+                        <div class="report-section-header">
+                            <i data-lucide="brain-circuit"></i>
+                            <h3>Model Insights & Key Factors</h3>
+                        </div>
+                        <div class="rec-box" style="margin-bottom: 24px;">
+                            ${explanationLines}
+                        </div>
+                        
+                        <div class="shap-container">
+                            ${shapHtml}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Swap view
+            reportView.innerHTML = reportHTML;
+            formView.classList.remove("view-active");
+            reportView.classList.add("view-active");
+            
+            // Render icons in report
             if (window.lucide) {
                 window.lucide.createIcons();
             }
 
-            // Animate meter
+            // Animate SHAP bars after rendering
             setTimeout(() => {
-                const meterFill = targetState?.querySelector(".meter-fill");
-
-                if (meterFill) {
-                    meterFill.style.width = fraudScore;
-                }
+                const bars = reportView.querySelectorAll('.shap-bar');
+                bars.forEach(bar => {
+                    bar.style.width = bar.getAttribute('data-target-width');
+                });
             }, 100);
 
-            // Scroll on mobile
-            if (window.innerWidth < 1024) {
-                document
-                    .querySelector(".results-panel")
-                    ?.scrollIntoView({ behavior: "smooth", block: "start" });
-            }
+            // Back button listener
+            document.getElementById("backBtn").addEventListener("click", () => {
+                reportView.classList.remove("view-active");
+                formView.classList.add("view-active");
+            });
+
+            // Scroll to top of section
+            document.querySelector(".prediction-section").scrollIntoView({ behavior: "smooth", block: "start" });
+
         } catch (error) {
             console.error(error);
-
-            alert(
-                `Failed to analyze claim:\n\n${error.message}\n\nMake sure the backend is running on ${API_BASE_URL}`
-            );
-
-            stateWaiting?.classList.remove("hidden");
+            alert(`Failed to analyze claim:\n\n${error.message}\n\nMake sure the backend is running on ${API_BASE_URL}`);
         } finally {
-            // Revert button state
+            // Revert predict button state
             predictBtn.disabled = false;
-            predictText.textContent = "Generate Again";
+            predictText.textContent = "Generate Prediction";
             
             const currentIcon = document.getElementById("predictIcon");
             if (currentIcon) {
                 const refreshIcon = document.createElement("i");
                 refreshIcon.id = "predictIcon";
-                refreshIcon.setAttribute("data-lucide", "refresh-cw");
+                refreshIcon.setAttribute("data-lucide", "activity");
                 currentIcon.parentNode.replaceChild(refreshIcon, currentIcon);
             }
             if (window.lucide) window.lucide.createIcons();
